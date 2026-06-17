@@ -1,29 +1,29 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int resi(vector<vector<int>>& s, int n) {
-    if (n == 0) return 0;
+int resi(vector<vector<int>>& s, int n) {// & da bi ubrzali kod 
+    if (n == 0) return 0;//ako upises 0 onda se vraca 0 jer si zeznuo unos
 
     sort(s.begin(), s.end());
 
     vector<int> dp(n);
-    dp[0] = s[0][2]; 
+    dp[0] = s[0][2]; //max zarada za prvi stand si je njegova cena 
 
-    for (int i = 1; i < n; i++) {
-        int uzmi = s[i][2]; 
+    for (int i = 1; i < n; i++) {//prva petlja
+        int uzmi = s[i][2]; //stoji tu ako uzimamo prvi stand onda uzimamo njegov profit 
         
-        for (int j = i - 1; j >= 0; j--) {
-            if (s[j][0] <= s[i][1]) { 
-                uzmi += dp[j]; 
-                break; 
+        for (int j = i - 1; j >= 0; j--) {// petlja za j koji ide od i-1 pa do prvi stand 
+            if (s[j][0] <= s[i][1]) { //proverava da li je kraj manji ili jednak pocetku sadasnjeg standa 
+                uzmi += dp[j]; //ako je okej onda se sabiraju
+                break; //cim nadjemo taj prvi koji se ne preklapa prekidamo petlju jer je taj sigurno najveci 
             }
         }
 
-        int ostavi = dp[i-1];
+        int ostavi = dp[i-1];//ako je prosla kombinacija bolja od ove onda se uzima prosla 
         dp[i] = max(uzmi, ostavi);
     }
 
-    return dp[n-1];
+    return dp[n-1];//to je ustv resenje
 }
 
 int main() {
