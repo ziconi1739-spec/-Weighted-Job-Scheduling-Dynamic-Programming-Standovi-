@@ -1,0 +1,47 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int resi(vector<vector<int>>& s, int n) {
+    if (n == 0) return 0;
+
+    sort(s.begin(), s.end());
+
+    vector<int> dp(n);
+    
+    for (int i = 0; i < n; i++) {
+        dp[i] = s[i][2]; 
+    }
+
+    for (int i = 1; i < n; i++) {
+        
+        for (int j = 0; j < i; j++) {
+            
+            if (s[j][0] <= s[i][1]) {
+                
+                dp[i] = max(dp[i], dp[j] + s[i][2]);
+            }
+        }
+    }
+
+    int najveca_zarada = 0;
+    for (int i = 0; i < n; i++) {
+        if (dp[i] > najveca_zarada) {
+            najveca_zarada = dp[i];
+        }
+    }
+
+    return najveca_zarada;
+}
+
+int main() {
+    int l_ulice, n; 
+    cin >> l_ulice >> n;
+    
+    vector<vector<int>> s(n, vector<int>(3));
+    
+    for (int i = 0; i < n; i++) {
+        cin >> s[i][1] >> s[i][0] >> s[i][2]; 
+    }
+    
+    cout << resi(s, n);
+}
